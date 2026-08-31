@@ -1,0 +1,24 @@
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Allure reports
+allure-report/
+allure-results/
+
+# Cucumber reports
+cucumber-report.html
+cucumber-report1.html
+cucumber-repoert.html
+
+# Playwright generated files
+test-results/
+playwright-report/
+
+# Node
+node_modules/
