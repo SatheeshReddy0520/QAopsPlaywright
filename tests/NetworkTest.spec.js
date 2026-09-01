@@ -30,27 +30,27 @@ test("WebApi1", async ({ page }) => {
     // 2nd way to wait for element === waitForLoadState("networkidle")
    
 
-     
-     
-      await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*",
-       async route=>
-        {
-          const responses= await page.request.fetch(route.request());
-          let data=JSON.stringify(payloadFakeData);
-          route.fulfill({
-            responses,
-            data,
+      
+      
+       await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*",
+        async route=>
+         {
+           const responses= await page.request.fetch(route.request());
+           let data=JSON.stringify(payloadFakeData);
+           route.fulfill({
+             responses,
+             data,
+          });
+
          });
-
-        });
-    await page.locator("button[routerlink='/dashboard/myorders']").click();
-    await page.waitForResponse("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*")
-    console.log(await page.locator(".mt-4").textContent());
+     await page.locator("button[routerlink='/dashboard/myorders']").click();
+     await page.waitForResponse("https://rahulshettyacademy.com/api/ecom/order/get-orders-for-customer/*")
+     console.log(await page.locator(".mt-4").textContent());
 
 
-    }
-    
-    
+     }
+     
+     
 
 
 );
