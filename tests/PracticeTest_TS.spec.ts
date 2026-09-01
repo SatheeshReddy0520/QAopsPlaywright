@@ -1,13 +1,16 @@
-import {test,expect} from '@playwright/test';
-import { customTest } from '../Utils -ts/Test-Base';
-import {POManager} from '../PageObjects_ts/POManager';
+import { test, type Page } from '@playwright/test';
+import * as TestBase from '../Utils -ts/Test-Base';
+import { POManager } from '../PageObjects_ts/POManager';
+import testData from '../Utils -ts/PlaceOrderTestData1.json';
+
+const customTest: any = (TestBase as any).customTest ?? test;
 
 
 
 
 
 //json->String->Object JS----
-const dataset = JSON.parse(JSON.stringify(require('../Utils -ts/PlaceOrderTestData1.json')));
+const dataset = testData;
 
 for (const data of dataset) {
   test(`@web Place a Order for,${data.productName}`, async ({ page }) => {
@@ -67,7 +70,7 @@ for (const data of dataset) {
 }
 
 
-customTest ("@web Test Case For Order", async ({ page, testDataForOrder }) => {
+customTest ("@web Test Case For Order", async ({ page, testDataForOrder }: { page: Page; testDataForOrder: any }) => {
 
   const countryname = " Country - India ";
   const cvvnum = "955";

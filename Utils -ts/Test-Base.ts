@@ -10,8 +10,8 @@ type CustomFixtures = {
   testDataForOrder: TestDataForOrder;
 };
 
-export const customTest = baseTest.extend<CustomFixtures>({
-  testDataForOrder: {
+export const  customTest = baseTest.extend<CustomFixtures>({
+  testDataForOrder:  {
     username: "satheeshreddy0520@gmail.com",
     password: "@Reddys143",
     productName: "ADIDAS ORIGINAL",
