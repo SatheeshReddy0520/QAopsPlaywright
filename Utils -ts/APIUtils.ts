@@ -1,4 +1,4 @@
-export class APiUtils {
+export class ApiUtils {
     apiContext:any;
     loginPayLoad:String;
     placeorderdata:any;
@@ -35,6 +35,4 @@ export class APiUtils {
  
         return response;
     }
-}
- 
-module.exports = { APiUtils };  //if its not gives it wont get on project in globally
+};
