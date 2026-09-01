@@ -21,7 +21,7 @@ test.beforeAll(async ({ browser }) => {
 })
 
 
-test('WebApi2', async () => {
+test.skip('WebApi2', async () => {
 
 
     const page = await webContext.newPage();

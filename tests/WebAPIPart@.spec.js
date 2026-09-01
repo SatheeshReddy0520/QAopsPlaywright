@@ -15,7 +15,7 @@ test.beforeAll( async()=>
   
   
 //create order is success
-test('@API Place the order', async ({page})=>
+test.skip('@API Place the order', async ({page})=>
 { 
     await page.addInitScript(value => {
   

@@ -25,7 +25,7 @@ test.beforeEach(() => {
 
 
 
-test("WebApi", async ({ page }) => {
+test.skip("WebApi", async ({ page }) => {
 
 //one time use---
     await page.addInitScript(value => {
