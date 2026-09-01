@@ -1,6 +1,6 @@
 const { test, expect, request } = require('@playwright/test');
 const { json } = require('node:stream/consumers');
-const { APIUtils } = require('../utils/APIUtils');
+const APIUtils = require('../utils/APIUtils');
  const apidata = {userEmail:"satheeshreddy0520@gmail.com",userPassword:"@Reddys143" }
  const placeorderdata = {orders:[{country:"India",productOrderedId:"6960ea76c941646b7a8b3dd5"}] }
  const payloadFakeData={data:[],message:"No Orders"}
