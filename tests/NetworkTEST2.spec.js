@@ -1,4 +1,8 @@
 const { test, expect } = require('@playwright/test');
+const { json } = require('node:stream/consumers');
+const { APiUtils } = require('../utils/APIUtils');
+const apiUtils = new APiUtils(apiContext, loginPayload);
+const response = await apiUtils.createOrder(orderPayload);
 
 test("NetworkTest2", async ({ browser }) => {
     const context = await browser.newContext();
@@ -12,9 +16,17 @@ test("NetworkTest2", async ({ browser }) => {
     await page.locator(".card-body b").first().waitFor();
 
     await page.locator("button[routerlink*='myorders']").click();
-    await page.route("https://rahulshettyacademy.com/api/ecom/order/get-orders-details?id=*",
-        route => route.continue({ url: 'https://rahulshettyacademy.com/api/ecom/order/get-orders-details?id=621661f884b053f6765465b6' }))
-    await page.locator("button:has-text('View')").first().click();
-    await expect(page.locator("p").last()).toHaveText("You are not authorize to view this order");
 
+    await page.route(
+        'https://rahulshettyacademy.com/api/ecom/order/get-orders-details?id=*',
+        (route) => route.continue({
+            url: 'https://rahulshettyacademy.com/api/ecom/order/get-orders-details?id=621661f884b053f6765465b6'
+        })
+    );
+
+    await page.locator("button:has-text('View')").first().click();
+
+    const result = await page.locator('p').last().textContent();
+
+    await expect(result).toEqual('You are not authorize to view this order');
 })
