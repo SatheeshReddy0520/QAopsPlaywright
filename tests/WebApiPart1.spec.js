@@ -1,19 +1,24 @@
 const { test, expect, request } = require('@playwright/test')
-const APIUtils = require('../utils/APIUtils');
+const { APiUtils } = require('../utils/APIUtils');
  const apidata = {userEmail:"satheeshreddy0520@gmail.com",userPassword:"@Reddys143" }
  const placeorderdata = {orders:[{country:"India",productOrderedId:"6960ea76c941646b7a8b3dd5"}] }
 
 let response;
 
 test.beforeAll(async () => {
+  const apiContext = await request.newContext();
 
-    const apicontext = await request.newContext();
-    const ApiUtils = new APIUtils(apicontext,apidata,placeorderdata);
-    response= await ApiUtils.CreateOrder(placeorderdata);
+  const apiUtils = new APiUtils(
+    apiContext,
+    apidata,
+    placeorderdata
+  );
 
-})
+  response = await apiUtils.createOrder(placeorderdata);
+});
 
-test.skip("WebApi1", async ({ page }) => {
+
+test("WebApi1", async ({ page }) => {
 
     //one time use---
     await page.addInitScript(value => {
