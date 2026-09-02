@@ -9,8 +9,8 @@ const loginPayLoad = {
 const orderPayLoad = {
   orders: [
     {
-      country: 'Cuba',
-      productOrderedId: '67a8dde5c0d3e6622a297cc8'
+      country: 'India',
+      productOrderedId: '6960ea76c941646b7a8b3dd5'
     }
   ]
 };
@@ -18,8 +18,13 @@ const orderPayLoad = {
 let response;
 
 test.beforeAll(async () => {
+
   const apiContext = await request.newContext();
-  const apiUtils = new APiUtils(apiContext, loginPayLoad);
+
+  const apiUtils = new APiUtils(
+    apiContext,
+    loginPayLoad
+  );
 
   response = await apiUtils.createOrder(orderPayLoad);
 
@@ -30,26 +35,56 @@ test.beforeAll(async () => {
 });
 
 test('@API Place the order', async ({ page }) => {
+
+  // Set token in browser local storage
   await page.addInitScript((token) => {
     window.localStorage.setItem('token', token);
   }, response.token);
 
-  await page.goto('https://rahulshettyacademy.com/client');
+  // Navigate to application
+  await page.goto(
+    'https://rahulshettyacademy.com/client'
+  );
 
-  await page.locator("button[routerlink*='myorders']").click();
+  // Click My Orders
+  await page
+    .locator("button[routerlink*='myorders']")
+    .click();
+
+  // Wait for orders table
   await page.locator('tbody').waitFor();
 
   const rows = page.locator('tbody tr');
 
-  for (let index = 0; index < await rows.count(); index++) {
-    const rowOrderId = await rows.nth(index).locator('th').textContent();
+  const rowCount = await rows.count();
 
-    if (response.orderId.includes(rowOrderId.trim())) {
-      await rows.nth(index).locator('button').first().click();
+  for (let index = 0; index < rowCount; index++) {
+
+    const rowOrderId = await rows
+      .nth(index)
+      .locator('th')
+      .textContent();
+
+    if (
+      rowOrderId &&
+      response.orderId.includes(rowOrderId.trim())
+    ) {
+      await rows
+        .nth(index)
+        .locator('button')
+        .first()
+        .click();
+
       break;
     }
   }
 
-  const orderIdDetails = await page.locator('.col-text').textContent();
-  expect(response.orderId.includes(orderIdDetails.trim())).toBeTruthy();
+  // Get order ID from details page
+  const orderIdDetails = await page
+    .locator('.col-text')
+    .textContent();
+
+  expect(
+    response.orderId.includes(orderIdDetails.trim())
+  ).toBeTruthy();
 });
