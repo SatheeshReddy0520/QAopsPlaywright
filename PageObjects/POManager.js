@@ -1,4 +1,5 @@
 const { LoginPage } = require('./LoginPage');
+const { LoginPagePractise } = require('./LoginPagePractise');
 const { DashboardPage } = require('./DashboardPage');
 const { CartPage } = require('./CartPage');
 const { CheckoutPage } = require('./CheckoutPage');
@@ -12,6 +13,7 @@ class POManager {
     constructor(page) {
         this.page = page;
         this.LoginPage = new LoginPage(this.page);
+        this.LoginPagePractise = new LoginPagePractise(this.page);
         this.DashboardPage = new DashboardPage(this.page);
         this.CartPage = new CartPage(this.page);
         this.CheckoutPage = new CheckoutPage(this.page);
@@ -23,6 +25,10 @@ class POManager {
 
     getInToLoginPage() {
         return this.LoginPage;
+    }
+
+    getIntoLoginPagePractise() {
+        return this.LoginPagePractise;
     }
 
     GetIntoDashboardPage() {

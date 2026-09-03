@@ -1,4 +1,4 @@
-export class ApiUtils {
+export class APIUtils {
     apiContext:any;
     loginPayLoad:String;
     placeorderdata:any;

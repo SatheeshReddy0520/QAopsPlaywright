@@ -1,37 +1,53 @@
 class APiUtils {
-    constructor(apiContext,loginPayLoad,placeorderdata) {
-        this.apiContext = apiContext;
-        this.loginPayLoad = loginPayLoad;
+  constructor(apiContext, loginPayload) {
+    this.apiContext = apiContext;
+    this.loginPayload = loginPayload;
+  }
+
+  async getToken() {
+    const loginResponse = await this.apiContext.post(
+      'https://rahulshettyacademy.com/api/ecom/auth/login',
+      { data: this.loginPayload }
+    );
+
+    const responseBody = await loginResponse.json();
+
+    if (!loginResponse.ok() || !responseBody.token) {
+      throw new Error(
+        `Login failed: ${JSON.stringify(responseBody)}`
+      );
     }
- 
-    async getToken() {
-        const loginResponse = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login", {
-            data: this.loginPayLoad
-        }); // 200, 201
-        const loginResponseJson = await loginResponse.json();
-        const token = loginResponseJson.token;
-        console.log(token);
-        return token;
+
+    return responseBody.token;
+  }
+
+  async createOrder(orderPayload) {
+    const token = await this.getToken();
+
+    const orderResponse = await this.apiContext.post(
+      'https://rahulshettyacademy.com/api/ecom/order/create-order',
+      {
+        data: orderPayload,
+        headers: {
+          Authorization: token,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    const responseBody = await orderResponse.json();
+
+    if (!orderResponse.ok() || !responseBody.orders?.length) {
+      throw new Error(
+        `Order creation failed: ${JSON.stringify(responseBody)}`
+      );
     }
- 
-    async createOrder(orderPayLoad) {
-        let response = {};
-        response.token = await this.getToken();
-        const orderResponse = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/order/create-order", {
-            data: orderPayLoad,
-            headers: {
-                'Authorization': response.token,
-                'Content-Type': 'application/json'
-            }
-        });
- 
-        const orderResponseJson = await orderResponse.json();
-        console.log(orderResponseJson);
-        const orderId = orderResponseJson.orders[0];
-        response.orderId = orderId;
- 
-        return response;
-    }
+
+    return {
+      token,
+      orderId: responseBody.orders[0]
+    };
+  }
 }
- 
-module.exports = { APiUtils };  //if its not gives it wont get on project in globally
+
+module.exports = { APiUtils };

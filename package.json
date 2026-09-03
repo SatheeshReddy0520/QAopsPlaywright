@@ -10,11 +10,9 @@
     "smoke": "npx playwright test --grep @smoke",
     "safaribrowser": "npx playwright test --config playwright.config1.js --project=safari",
     "AllureUiTests": "npx playwright test --grep @web --reporter=line,allure-playwright",
-    "CucumberRegression":"npx cucumber-js --tags '@Regression' --retry 1 --exit --format html:cucumber-report1.html",
-  
+    "CucumberRegression": "npx cucumber-js --tags '@Regression' --retry 1 --exit --format html:cucumber-report1.html",
     "CucumberReg": "npx cucumber-js --tags \"@Regression\" --retry 1 --exit --format html:cucumber-report1.html",
-
-    "CucumberValidations":"npx cucumber-js --tags '@Validations' --retry 1 --exit --format html:cucumber-report1.html"
+    "CucumberValidations": "npx cucumber-js --tags '@Validations' --retry 1 --exit --format html:cucumber-report1.html"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +27,7 @@
   },
   "dependencies": {
     "@cucumber/cucumber": "^13.2.1",
+    "@playwright/mcp": "^0.0.80",
     "exceljs": "^3.4.0"
   }
 }
